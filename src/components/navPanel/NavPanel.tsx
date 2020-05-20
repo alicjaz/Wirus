@@ -5,11 +5,14 @@ import DrawerComponent from '../drawerComponent/DrawerComponent'
 
 const NavPanel = () => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const handleClose = () =>{
+        setDrawerOpen(false);
+    }
 
     return (
         <>
             <MenuBar onIconClick={() => setDrawerOpen(true)} />
-            <DrawerComponent shouldBeOpen={drawerOpen} />
+            <DrawerComponent shouldBeOpen={drawerOpen} onOtherClick={()=> setDrawerOpen(false)} />
         </>
     );
 }

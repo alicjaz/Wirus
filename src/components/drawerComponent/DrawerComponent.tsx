@@ -2,7 +2,12 @@ import React from 'react';
 import { Drawer } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import { MenuItem } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import MovieIcon from '@material-ui/icons/Movie';
+import SearchIcon from '@material-ui/icons/Search';
 
+import Icon from '@material-ui/core/Icon';
 const makeClasses = makeStyles((theme: Theme) => ({
     drawerContent: {
         margin: '20px',
@@ -11,25 +16,27 @@ const makeClasses = makeStyles((theme: Theme) => ({
 
 interface IDrawerComponentProps {
     shouldBeOpen: boolean,
+    onOtherClick: () => void;
 }
 
-const DrawerComponent: React.FC<IDrawerComponentProps> = ({ shouldBeOpen }) => {
+
+const DrawerComponent: React.FC<IDrawerComponentProps> = ({ shouldBeOpen,onOtherClick }) => {
     const classes = makeClasses();
     const [isOpen, setIsOpen] = React.useState(false);
     const history = useHistory();
-    const redirectTo = (path: string, name: string) => <div onClick={() => history.push(path)}>{name}</div>;
+
+    const RedirectTo = (path: string, name: string) => <div onClick={() => history.push(path)}>{name}</div>
+
     return (
-        <div>
+        <div onClick={()=>onOtherClick()}>
             <Drawer
                 open={isOpen || shouldBeOpen}
                 onClose={() => setIsOpen(false)}
             >
                 <div className={classes.drawerContent}>
-                    <ul>
-                        <li>{redirectTo('/', 'Home')}</li>
-                        <li>{redirectTo('/movie', 'Movie')}</li>
-                        <li>{redirectTo('/search', 'Search Movie')}</li>
-                    </ul>
+                    <MenuItem><HomeIcon/>{RedirectTo('/', 'Home')}</MenuItem>
+                    <MenuItem><MovieIcon/>{RedirectTo('/movie', 'Movie')}</MenuItem>
+                    <MenuItem><SearchIcon/>{RedirectTo('/search', 'Search Movie')}</MenuItem>
                 </div>
             </Drawer>
         </div>
